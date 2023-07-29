@@ -10,6 +10,37 @@ class Card:
         return f"{self.__name} {self.__value}"
 
 
+class Deck:
+    def __init__(self) -> None:
+        self.__cards = []
+        self.create()
+    
+    def create(self):
+        self.__cards.clear()
+
+        cards = [
+            ["2", 2],
+            ["3", 3],
+            ["4", 4],
+            ["5", 5],
+            ["6", 6],
+            ["7", 7],
+            ["8", 8],
+            ["9", 9],
+            ["10", 10],
+            ["King", 10],
+            ["Queen", 10],
+            ["Jack", 10],
+            ["Ace", 11]
+        ]
+
+        names = ["Heart", "Club", "Diamond", "Spade"]
+    
+    @property
+    def cards(self):
+        return str(self.__cards)
+
+
 if __name__ == "__main__":
-    card1 = Card("Club Jack", 10)
-    print(card1)
+    deck = Deck()
+    print(deck.cards)
