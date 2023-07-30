@@ -91,12 +91,8 @@ if __name__ == "__main__":
 
     deck = Deck()
     ai_player1 = AIPlayer()
-    ai_player2 = AIPlayer()
 
     ai_player1.init_hand(deck)
-    ai_player2.init_hand(deck)
     ai_player1.draw_cards(deck)
-    ai_player2.draw_cards(deck)
 
     ai_player1.report()
-    ai_player2.report()

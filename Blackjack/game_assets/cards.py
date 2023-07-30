@@ -9,6 +9,10 @@ class Card:
     @property
     def value(self):
         return self.__value
+    
+    def change_value(self):
+        if self.__value == 11:
+            self.__value = 1
 
     def __str__(self) -> str:
         return f"Name: {self.__name} Value: {self.__value}"
@@ -64,5 +68,9 @@ class Deck:
 
 
 if __name__ == "__main__":
-    deck = Deck()
-    deck.show_cards()
+    card1 = Card("Ace", 11)
+    card2 = Card("King", 10)
+
+    card1.change_value()
+    card2.change_value()
+    print(card1.value, card2.value)
