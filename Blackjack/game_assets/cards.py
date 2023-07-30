@@ -5,6 +5,10 @@ class Card:
     def __init__(self, name, value) -> None:
         self.__name = name
         self.__value = value
+    
+    @property
+    def value(self):
+        return self.__value
 
     def __str__(self) -> str:
         return f"Name: {self.__name} Value: {self.__value}"

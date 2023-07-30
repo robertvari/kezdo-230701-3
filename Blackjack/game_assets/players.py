@@ -1,4 +1,4 @@
-import random
+import random, time
 
 class Player_BASE:
     def __init__(self) -> None:
@@ -8,6 +8,38 @@ class Player_BASE:
         self.__playing = True
 
         self._create()
+
+    @property
+    def hand_value(self):
+        return sum([card.value for card in self.__hand])
+
+    def init_hand(self, deck):
+        self.__hand.clear()
+        self.__playing = True
+
+        self.__hand.append(deck.draw())
+        self.__hand.append(deck.draw())
+
+    def draw_cards(self, deck):
+        assert len(self.__hand) == 2, "Player hand must be inited"
+
+        if not self.__playing:
+            print(f"{self.name} not playing this time")
+            return
+
+        time.sleep(2)
+
+        while self.__playing:
+            # get hand value
+            if self.hand_value < random.randint(16, 19):
+                print(f"{self.name} draws a card")
+                new_card = deck.draw()
+                self.__hand.append(new_card)
+            else:
+                print(f"{self.name} finishes his/her turn")
+                time.sleep(2)
+                self.__playing = False
+
 
     @property
     def name(self):
@@ -40,6 +72,7 @@ class Player_BASE:
         print(f"Name: {self.__name}")
         print(f"Credits: {self.__credits}")
         print(f"Hand: {self.__hand}")
+        print(f"Hand Value: {self.hand_value}")
         print(f"Playing: {self.__playing}")
 
 
@@ -54,8 +87,16 @@ class AIPlayer(Player_BASE):
 
 
 if __name__ == "__main__":
-    player = Player()
-    ai_Player = AIPlayer()
+    from cards import Deck
 
-    player.report()
-    ai_Player.report()
+    deck = Deck()
+    ai_player1 = AIPlayer()
+    ai_player2 = AIPlayer()
+
+    ai_player1.init_hand(deck)
+    ai_player2.init_hand(deck)
+    ai_player1.draw_cards(deck)
+    ai_player2.draw_cards(deck)
+
+    ai_player1.report()
+    ai_player2.report()
