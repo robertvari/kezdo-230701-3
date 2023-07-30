@@ -9,6 +9,22 @@ class Player_BASE:
 
         self._create()
 
+    @property
+    def hand(self):
+        return str(self.__hand)
+
+    @property
+    def playing(self):
+        return self.__playing
+    
+    @playing.setter
+    def playing(self, new_playing):
+        self.__playing = new_playing
+
+    @property
+    def credits(self):
+        return self.__credits
+
     def give_bet(self, min_bet) -> 0:
         if self.__credits < min_bet:
             self.__playing = False
@@ -104,6 +120,29 @@ class Player(Player_BASE):
         super()._create()
         self.name = "Robert Vari"     
 
+    def give_bet(self, min_bet) -> 0:
+        if self.credits < min_bet:
+            self.playing = False
+            print(f"You have no more credits. :(")
+            return 0
+        
+        return_credits = min_bet
+        print(f"The minimum bet is: {min_bet}")
+        print(f"Your hand: {self.hand}")
+        print(f"Hand value: {self.hand_value}")
+        print(f"Your credits: {self.credits}")
+
+        response = input("Do you want to raise? (y/n)")
+        if response == "y":
+            response = int(input("How much?"))
+            while response > self.credits:
+                print("You don't hanve enough credits.")
+                response = int(input("How much?"))
+
+            return_credits = min_bet + response
+
+        self.credits = self.credits - return_credits
+        return return_credits
 
 class AIPlayer(Player_BASE):
     pass
@@ -120,8 +159,8 @@ if __name__ == "__main__":
 
     player.init_hand(deck)
     reward += player.give_bet(min_bet)
-    player.draw_cards(deck)
+    # player.draw_cards(deck)
 
-    player.report()
+    # player.report()
 
-    print(f"Reward: {reward}")
+    # print(f"Reward: {reward}")
