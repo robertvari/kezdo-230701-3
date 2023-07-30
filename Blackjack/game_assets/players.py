@@ -139,7 +139,7 @@ class Player(Player_BASE):
                 print("You don't hanve enough credits.")
                 response = int(input("How much?"))
 
-            return_credits = min_bet + response
+            return_credits = response
 
         self.credits = self.credits - return_credits
         return return_credits
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 
     player.init_hand(deck)
     reward += player.give_bet(min_bet)
-    # player.draw_cards(deck)
+    player.draw_cards(deck)
 
     # player.report()
 
