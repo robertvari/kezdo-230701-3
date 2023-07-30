@@ -18,7 +18,7 @@ class Player_BASE:
         self.__playing = True
 
         self.__hand.append(deck.draw())
-        self.__hand.append(deck.draw())
+        self.__add_card(deck.draw())
 
     def draw_cards(self, deck):
         assert len(self.__hand) == 2, "Player hand must be inited"
@@ -34,12 +34,17 @@ class Player_BASE:
             if self.hand_value < random.randint(16, 19):
                 print(f"{self.name} draws a card")
                 new_card = deck.draw()
-                self.__hand.append(new_card)
+                self.__add_card(new_card)
             else:
                 print(f"{self.name} finishes his/her turn")
                 time.sleep(2)
                 self.__playing = False
 
+    def __add_card(self, new_card):
+        if self.hand_value > 10 and new_card.value == 11:
+            new_card.change_value()
+        
+        self.__hand.append(new_card)
 
     @property
     def name(self):
