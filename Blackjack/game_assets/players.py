@@ -113,6 +113,9 @@ class Player_BASE:
         print(f"Hand: {self.__hand}")
         print(f"Hand Value: {self.hand_value}")
 
+    def __repr__(self) -> str:
+        return self.__name
+
 class Player(Player_BASE):
     def _create(self):
         super()._create()
