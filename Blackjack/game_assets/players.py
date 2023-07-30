@@ -52,7 +52,7 @@ class Player_BASE:
         self.__playing = True
 
         self.__hand.append(deck.draw())
-        self.__add_card(deck.draw())
+        self._add_card(deck.draw())
 
     def draw_cards(self, deck):
         assert len(self.__hand) == 2, "Player hand must be inited"
@@ -68,13 +68,13 @@ class Player_BASE:
             if self.hand_value < random.randint(16, 19):
                 print(f"{self.name} draws a card")
                 new_card = deck.draw()
-                self.__add_card(new_card)
+                self._add_card(new_card)
             else:
                 print(f"{self.name} finishes his/her turn")
                 time.sleep(2)
                 self.__playing = False
 
-    def __add_card(self, new_card):
+    def _add_card(self, new_card):
         if self.hand_value > 10 and new_card.value == 11:
             new_card.change_value()
         
@@ -112,8 +112,6 @@ class Player_BASE:
         print(f"Credits: {self.__credits}")
         print(f"Hand: {self.__hand}")
         print(f"Hand Value: {self.hand_value}")
-        print(f"Playing: {self.__playing}")
-
 
 class Player(Player_BASE):
     def _create(self):
@@ -144,6 +142,29 @@ class Player(Player_BASE):
         self.credits = self.credits - return_credits
         return return_credits
 
+    def draw_cards(self, deck):
+        print(f"This is your turn {self.name}")
+
+        while self.playing:
+            print(f"Your cards: {self.hand}")
+            print(f"Hand value: {self.hand_value}")
+
+            if self.hand_value >= 20:
+                self.playing = False
+                print(f"You finished your turn. Your hand value: {self.hand_value}")
+                break
+            
+            response = input("Do you want to draw a card? (y/n)")
+            if response == "y":
+                new_card = deck.draw()
+                print(f"You card: {new_card}")
+                self._add_card(new_card)
+            else:
+                if self.hand_value < 16:
+                    print(f"You have to draw a card. Your hand value is too low: {self.hand_value}")
+                else:
+                    self.playing = False
+
 class AIPlayer(Player_BASE):
     pass
 
@@ -161,6 +182,5 @@ if __name__ == "__main__":
     reward += player.give_bet(min_bet)
     player.draw_cards(deck)
 
-    # player.report()
-
-    # print(f"Reward: {reward}")
+    player.report()
+    print(f"Reward: {reward}")
