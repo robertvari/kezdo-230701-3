@@ -51,10 +51,14 @@ class Deck:
     def draw(self):
         return self.__cards.pop(0)
 
+    def show_cards(self):
+        print(self.__cards)
+
     @property
-    def cards(self):
-        return str(self.__cards)
+    def card_count(self):
+        return len(self.__cards)
 
 
 if __name__ == "__main__":
     deck = Deck()
+    deck.show_cards()
