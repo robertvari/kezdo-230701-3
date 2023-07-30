@@ -174,13 +174,21 @@ if __name__ == "__main__":
 
     deck = Deck()
     player = Player()
+    ai_player = AIPlayer()
 
     reward = 0
     min_bet = 10
 
     player.init_hand(deck)
     reward += player.give_bet(min_bet)
+
+    ai_player.init_hand(deck)
+    reward += ai_player.give_bet(min_bet)
+
+
     player.draw_cards(deck)
+    ai_player.draw_cards(deck)
 
     player.report()
+    ai_player.report()
     print(f"Reward: {reward}")
