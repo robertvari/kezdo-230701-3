@@ -9,6 +9,10 @@ class Player_BASE:
 
         self._create()
 
+    def give_reward(self, reward):
+        print(f"{self.name} wins {reward}!!!")
+        self.__credits += reward
+
     @property
     def hand(self):
         return str(self.__hand)
