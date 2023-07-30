@@ -9,6 +9,24 @@ class Player_BASE:
 
         self._create()
 
+    def give_bet(self, min_bet) -> 0:
+        if self.__credits < min_bet:
+            self.__playing = False
+            print(f"{self.name} has no more credits. :(")
+            return 0
+        
+        return_credits = min_bet
+        
+        if self.hand_value >= 18 and self.hand_value < 21:
+            return_credits += (self.__credits - min_bet) // 2
+
+        if self.hand_value == 21:
+            return_credits = self.__credits
+        
+        self.__credits -= return_credits
+        print(f"{self.name} gives {return_credits} bet.")
+        return return_credits
+
     @property
     def hand_value(self):
         return sum([card.value for card in self.__hand])
@@ -95,9 +113,15 @@ if __name__ == "__main__":
     from cards import Deck
 
     deck = Deck()
-    ai_player1 = AIPlayer()
+    player = Player()
 
-    ai_player1.init_hand(deck)
-    ai_player1.draw_cards(deck)
+    reward = 0
+    min_bet = 10
 
-    ai_player1.report()
+    player.init_hand(deck)
+    reward += player.give_bet(min_bet)
+    player.draw_cards(deck)
+
+    player.report()
+
+    print(f"Reward: {reward}")
